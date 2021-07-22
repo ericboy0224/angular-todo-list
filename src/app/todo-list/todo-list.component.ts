@@ -1,6 +1,7 @@
 import { TodoListService } from './todo-list.service';
 import { Component, OnInit } from '@angular/core';
 import { Todo } from './todo.model';
+import { TodoStatusType } from './todo-status-type';
 @Component({
   selector: 'app-todo-list',
   templateUrl: './todo-list.component.html',
@@ -9,6 +10,12 @@ import { Todo } from './todo.model';
 export class TodoListComponent implements OnInit {
   todo: string = "";
   inputState: boolean = true;
+  //代辦事項
+  todoStatusType =TodoStatusType;
+
+  //目前
+  private status = TodoStatusType.All;
+
   constructor(private todoListService: TodoListService) { }
 
   ngOnInit(): void {
@@ -16,15 +23,47 @@ export class TodoListComponent implements OnInit {
   }
 
   addTodo(): void {
-    if (this.todo) {
-      this.todoListService.add(this.todo, false);
-      this.todo = ''
+    if (!this.todo.trim()) {
+      return;
     }
+    this.todoListService.add(this.todo, false);
+    this.todo = '';
   }
 
   getList(): Todo[] {
+    let list: Todo[] = [];
+
+    switch(this.status){
+
+      case TodoStatusType.Active:
+        list = this.getRemainingList();
+        break;
+
+      case TodoStatusType.Completed:
+        list = this.getCompletedList();
+        break;
+
+      default:
+        list = this.todoListService.getList();
+        break;
+    }
+
+    return list;
+  }
+  getAllList(): Todo[]{
     return this.todoListService.getList();
   }
+
+  allCompleted(): boolean{
+    return this.getAllList.length === this.getCompletedList.length;
+  }
+  setAllTo(completed: boolean): void{
+    this.getAllList().forEach((todo)=>{
+      todo.setCompleted(completed);
+    })
+  }
+
+
 
   remove(index: number): void {
     this.todoListService.remove(index);
@@ -67,6 +106,29 @@ export class TodoListComponent implements OnInit {
   getRemainingList(): Todo[] {
     return this.todoListService.getWithCompleted(false);
   }
+///////// 移除完成事項 ////////////
+  removeCompleted(): void{
+    this.todoListService.removeCompleted();
+  }
+
+
+  //////////取得代辦事項////////////
+  getCompletedList(): Todo[]{
+    return this.todoListService.getWithCompleted(true);
+  }
+  //////////設定狀態////////////
+  setStatus(status: number): void{
+    this.status = status;
+  }
+
+  //////////檢查目前狀態////////////
+  checkStatus(status: number): boolean{
+    return this.status === status;
+  }
+
+
+
+  ///////////// Local Storage //////////
 
   save() {
     this.todoListService.save();
@@ -74,6 +136,7 @@ export class TodoListComponent implements OnInit {
   load() {
     this.todoListService.load();
   }
+
 
 
 }

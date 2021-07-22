@@ -1,4 +1,5 @@
 
+
 import { Injectable } from '@angular/core';
 import { Todo } from './todo.model';
 @Injectable({
@@ -9,20 +10,14 @@ export class TodoListService {
   private list: Todo[] = [];
 
   constructor() { }
-
+///////////////// Add and Remove //////////////
   add(title: string, completed: boolean) {
-    if (!title.trim()){
-      return
-    }
+    // if (!title.trim()){
+    //   return
+    // }
 
     this.list.push(new Todo(title, completed ));
     this.save();
-  }
-
-  //list is private
-
-  getList(): Todo[] {
-    return this.list;
   }
 
   remove(index: number): void {
@@ -30,14 +25,33 @@ export class TodoListService {
     this.save();
   }
 
+///////////// Get List Data //////////////
+
+  getList(): Todo[] {
+    return this.list;
+  }
+
+
+
+  //////////////// Get Completed //////////
   getWithCompleted(completed: boolean): Todo[] {
     return this.list.filter(todo => todo.done === completed);
   }
+
+  //////////////// Toggle Completion ////////
   toggleCompletion(index: number):void{
     this.list[index].toggleCompletion();
     this.save();
   }
 
+  /////////////// Remove Completion //////////
+  removeCompleted(): void{
+    this.list = this.getWithCompleted(false);
+  }
+
+
+
+///////////// Local Storage ////////////////////
   save(): void {
     const stringfied = JSON.stringify(this.list);
     localStorage.setItem("list", stringfied);
