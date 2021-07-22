@@ -8,6 +8,7 @@ import { Todo } from './todo.model';
 })
 export class TodoListComponent implements OnInit {
   todo: string = "";
+  inputState: boolean = true;
   constructor(private todoListService: TodoListService) { }
 
   ngOnInit(): void {
@@ -31,6 +32,7 @@ export class TodoListComponent implements OnInit {
 
   edit(todo: Todo): void {
     todo.editable = true;
+    this.inputState = false
   }
 
   update(todo: Todo, newTitle: string): void {
@@ -41,7 +43,7 @@ export class TodoListComponent implements OnInit {
 
     const title = newTitle.trim();
 
-    if (title) {
+    if (title && title.trim()) {
       todo.setTitle(title);
       todo.editable = false;
     } else {
@@ -50,25 +52,26 @@ export class TodoListComponent implements OnInit {
         this.remove(index);
       }
     }
+    this.inputState = true;
     this.save();
   }
 
-  toggleCompletion(index: number): void{
+  toggleCompletion(index: number): void {
     this.todoListService.toggleCompletion(index);
 
   }
 
-  cancelEditing(todo: Todo): void{
+  cancelEditing(todo: Todo): void {
     todo.editable = false;
   }
-  getRemainingList(): Todo[]{
+  getRemainingList(): Todo[] {
     return this.todoListService.getWithCompleted(false);
   }
 
-  save(){
+  save() {
     this.todoListService.save();
   }
-  load(){
+  load() {
     this.todoListService.load();
   }
 

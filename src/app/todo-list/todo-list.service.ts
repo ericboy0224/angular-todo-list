@@ -11,8 +11,11 @@ export class TodoListService {
   constructor() { }
 
   add(title: string, completed: boolean) {
-    if (title || title.trim)
-      this.list.push(new Todo(title, completed ));
+    if (!title.trim()){
+      return
+    }
+
+    this.list.push(new Todo(title, completed ));
     this.save();
   }
 
