@@ -1,0 +1,33 @@
+<section class="todoapp">
+
+  <header class="header">
+    <h1>todos</h1>
+    <input class="new-todo" placeholder="What needs to be done?" autofocus (keyup.enter)="addTodo()" [(ngModel)]="todo">
+  </header>
+
+
+
+  <section class="main" *ngIf="getList().length">
+
+    <ul class="todo-list">
+      <li *ngFor="let todo of getList(); let i = index" [class.completed]="todo.done" [class.editing]="todo.editing">
+        <div class="view">
+          <input class="toggle" type="checkbox" (click)="toggleCompletion(i)" [checked]="todo.done">
+          <label (dblclick)="edit(todo)">{{ todo.getTitle() }}</label>
+          <button class="destroy" (click)="remove(i)"></button>
+        </div>
+        <input class="edit" #editedtodo *ngIf="todo.editing" [value]="todo.getTitle()"
+          (blur)="update(todo, editedtodo.value)" (keyup.enter)="update(todo, editedtodo.value)"
+          (keyup.escape)="cancelEditing(todo)">
+      </li>
+    </ul>
+
+  </section>
+  <footer class="footer" *ngIf="getList().length">
+    <span class="todo-count">
+      <strong>{{ getRemainingList().length}}</strong>
+      {{ getRemainingList.length >1 ? 'items' : 'item'}} left
+    </span>
+  </footer>
+
+</section>
