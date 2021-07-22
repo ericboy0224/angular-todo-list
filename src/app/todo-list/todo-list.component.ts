@@ -16,7 +16,7 @@ export class TodoListComponent implements OnInit {
 
   addTodo(): void {
     if (this.todo) {
-      this.todoListService.add(this.todo);
+      this.todoListService.add(this.todo, false);
       this.todo = ''
     }
   }
@@ -50,6 +50,7 @@ export class TodoListComponent implements OnInit {
         this.remove(index);
       }
     }
+    this.save();
   }
 
   toggleCompletion(index: number): void{
@@ -64,9 +65,9 @@ export class TodoListComponent implements OnInit {
     return this.todoListService.getWithCompleted(false);
   }
 
-  // save(){
-  //   this.todoListService.save();
-  // }
+  save(){
+    this.todoListService.save();
+  }
   load(){
     this.todoListService.load();
   }

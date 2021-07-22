@@ -9,9 +9,10 @@ export class TodoListService {
   private list: Todo[] = [];
 
   constructor() { }
-  add(title: string) {
+
+  add(title: string, completed: boolean) {
     if (title || title.trim)
-      this.list.push(new Todo(title));
+      this.list.push(new Todo(title, completed ));
     this.save();
   }
 
@@ -46,7 +47,7 @@ export class TodoListService {
     if (listJSON !== null) {
       const listObj = JSON.parse(listJSON);
       for (let item of listObj) {
-        this.add(item.title);
+        this.list.push(new Todo(item.title, item.completed));
       }
     } else {
       this.list = [];
