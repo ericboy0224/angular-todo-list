@@ -11,7 +11,7 @@ export class TodoListComponent implements OnInit {
   todo: string = "";
   inputState: boolean = true;
   //代辦事項
-  todoStatusType =TodoStatusType;
+  todoStatusType = TodoStatusType;
 
   //目前
   private status = TodoStatusType.All;
@@ -19,7 +19,7 @@ export class TodoListComponent implements OnInit {
   constructor(private todoListService: TodoListService) { }
 
   ngOnInit(): void {
-    this.load();
+
   }
 
   addTodo(): void {
@@ -33,7 +33,7 @@ export class TodoListComponent implements OnInit {
   getList(): Todo[] {
     let list: Todo[] = [];
 
-    switch(this.status){
+    switch (this.status) {
 
       case TodoStatusType.Active:
         list = this.getRemainingList();
@@ -50,23 +50,24 @@ export class TodoListComponent implements OnInit {
 
     return list;
   }
-  getAllList(): Todo[]{
+  getAllList(): Todo[] {
     return this.todoListService.getList();
   }
 
-  allCompleted(): boolean{
-    return this.getAllList.length === this.getCompletedList.length;
+  allCompleted(): boolean {
+    return this.getAllList().length === this.getCompletedList().length;
   }
-  setAllTo(completed: boolean): void{
-    this.getAllList().forEach((todo)=>{
+  setAllTo(completed: boolean): void {
+    this.getAllList().forEach((todo) => {
       todo.setCompleted(completed);
     })
+    this.save();
   }
 
 
 
-  remove(index: number): void {
-    this.todoListService.remove(index);
+  remove(todo: Todo): void {
+    this.todoListService.remove(todo);
   }
 
   edit(todo: Todo): void {
@@ -88,41 +89,42 @@ export class TodoListComponent implements OnInit {
     } else {
       const index = this.getList().indexOf(todo);
       if (index !== -1) {
-        this.remove(index);
+        this.remove(todo);
       }
     }
     this.inputState = true;
     this.save();
   }
 
-  toggleCompletion(index: number): void {
-    this.todoListService.toggleCompletion(index);
+  toggleCompletion(todo: Todo): void {
+    this.todoListService.toggleCompletion(todo);
 
   }
 
   cancelEditing(todo: Todo): void {
     todo.editable = false;
   }
+  getCompletedList(): Todo[] {
+    return this.todoListService.getWithCompleted(true);
+  }
   getRemainingList(): Todo[] {
     return this.todoListService.getWithCompleted(false);
   }
-///////// 移除完成事項 ////////////
-  removeCompleted(): void{
+  ///////// 移除完成事項 ////////////
+  removeCompleted(): void {
     this.todoListService.removeCompleted();
   }
 
 
   //////////取得代辦事項////////////
-  getCompletedList(): Todo[]{
-    return this.todoListService.getWithCompleted(true);
-  }
+
   //////////設定狀態////////////
-  setStatus(status: number): void{
+  setStatus(status: number): void {
     this.status = status;
   }
 
   //////////檢查目前狀態////////////
-  checkStatus(status: number): boolean{
+  checkStatus(status: number): boolean {
     return this.status === status;
   }
 
@@ -133,9 +135,7 @@ export class TodoListComponent implements OnInit {
   save() {
     this.todoListService.save();
   }
-  load() {
-    this.todoListService.load();
-  }
+
 
 
 

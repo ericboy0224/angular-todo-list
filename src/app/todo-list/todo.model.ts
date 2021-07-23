@@ -1,10 +1,8 @@
-
-
 export class Todo {
   // 記錄代辦事項與完成、編輯模式
   private title = '';
-  private completed = false;
-  private editMode = false;
+  completed = false;
+  editMode = false;
   constructor(title: string, completed: boolean) {
     this.title = title;
     this.completed = completed;

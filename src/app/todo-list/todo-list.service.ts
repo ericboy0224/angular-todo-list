@@ -1,5 +1,3 @@
-
-
 import { Injectable } from '@angular/core';
 import { Todo } from './todo.model';
 @Injectable({
@@ -9,68 +7,52 @@ export class TodoListService {
 
   private list: Todo[] = [];
 
-  constructor() { }
-///////////////// Add and Remove //////////////
-  add(title: string, completed: boolean) {
-    // if (!title.trim()){
-    //   return
-    // }
+  constructor() {
+    const listJSON = localStorage.getItem('list');
 
-    this.list.push(new Todo(title, completed ));
-    this.save();
+    if (listJSON !== null) {
+      const listObj = JSON.parse(listJSON);
+      this.list = listObj.map((todo: { title: string, completed: boolean }) => {
+        let listItem = new Todo(todo.title, todo.completed);
+        return listItem
+      })
+    } else {
+      this.list = [];
+    }
+  }
+  ///////////// Local Storage ////////////////////
+  save(): void {
+    const stringfied = JSON.stringify(this.list);
+    localStorage.setItem("list", stringfied);
+    console.log('working', stringfied);
   }
 
-  remove(index: number): void {
-    this.list.splice(index, 1);
-    this.save();
-  }
-
-///////////// Get List Data //////////////
-
-  getList(): Todo[] {
-    return this.list;
-  }
-
-
-
-  //////////////// Get Completed //////////
   getWithCompleted(completed: boolean): Todo[] {
     return this.list.filter(todo => todo.done === completed);
   }
 
-  //////////////// Toggle Completion ////////
-  toggleCompletion(index: number):void{
-    this.list[index].toggleCompletion();
-    this.save();
-  }
 
-  /////////////// Remove Completion //////////
-  removeCompleted(): void{
+  removeCompleted(): void {
     this.list = this.getWithCompleted(false);
   }
 
-
-
-///////////// Local Storage ////////////////////
-  save(): void {
-    const stringfied = JSON.stringify(this.list);
-    localStorage.setItem("list", stringfied);
-    console.log('working',stringfied);
+  toggleCompletion(todo: Todo): void {
+    todo.toggleCompletion();
+    this.save();
   }
 
-  load(): void {
-    const listJSON = localStorage.getItem('list');
-    console.log('load working!');
-    if (listJSON !== null) {
-      const listObj = JSON.parse(listJSON);
-      for (let item of listObj) {
-        this.list.push(new Todo(item.title, item.completed));
-      }
-    } else {
-      this.list = [];
-    }
-
+  remove(todo: Todo): void {
+    this.list.splice(this.list.indexOf(todo), 1);
+    this.save();
   }
 
+  add(title: string, completed: boolean) {
+    this.list.push(new Todo(title, completed));
+    this.save();
+  }
+
+  getList(): Todo[] {
+    return this.list;
+  }
 
 }
