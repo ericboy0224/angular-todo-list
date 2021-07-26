@@ -83,7 +83,7 @@ export class TodoListComponent implements OnInit {
 
     const title = newTitle.trim();
 
-    if (title && title.trim()) {
+    if (title.length > 0) {
       todo.setTitle(title);
       todo.editable = false;
     } else {

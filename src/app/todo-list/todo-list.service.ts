@@ -13,11 +13,8 @@ export class TodoListService {
     if (listJSON !== null) {
       const listObj = JSON.parse(listJSON);
       this.list = listObj.map((todo: { title: string, completed: boolean }) => {
-        let listItem = new Todo(todo.title, todo.completed);
-        return listItem
+        return new Todo(todo.title, todo.completed);
       })
-    } else {
-      this.list = [];
     }
   }
   ///////////// Local Storage ////////////////////

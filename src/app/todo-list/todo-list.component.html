@@ -9,7 +9,8 @@
 
 
   <section class="main" *ngIf="getAllList().length">
-    <input type="checkbox" id="toggle-all" class="toggle-all" *ngIf="getAllList().length" #toggleall [checked]="allCompleted()" (click)="setAllTo(toggleall.checked)">
+    <input type="checkbox" id="toggle-all" class="toggle-all" *ngIf="getAllList().length" #toggleall
+      [checked]="allCompleted()" (click)="setAllTo(toggleall.checked)">
     <label for="toggle-all"></label>
     <ul class="todo-list">
       <li *ngFor="let todo of getList(); let i = index" [class.completed]="todo.done" [class.editing]="todo.editing">
@@ -53,7 +54,8 @@
         </a>
       </li>
     </ul>
-    <button class="clear-completed" *ngIf="getCompletedList().length" (click)="removeCompleted()">Clear Completed</button>
+    <button class="clear-completed" *ngIf="getCompletedList().length" (click)="removeCompleted()">Clear
+      Completed</button>
   </footer>
 
 </section>
