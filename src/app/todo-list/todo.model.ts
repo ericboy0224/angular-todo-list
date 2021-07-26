@@ -1,43 +1,22 @@
 export class Todo {
     // 記錄代辦事項與完成、編輯模式
-    private title = '';
-    completed = false;
-    editMode = false;
-    constructor(title: string, completed: boolean) {
-        this.title = title;
-        this.completed = completed;
-    }
+    completed: boolean;
+    editing: boolean;
 
-    // getter
+    private _title: string;
 
-    get done(): boolean {
-        return this.completed;
+    //getter
+    get title(){
+        return this._title;
     }
-    getTitle() {
-        return this.title;
-    }
-    //切換
-    toggleCompletion(): void {
-        this.completed = !this.completed;
-    }
-
-    get editing(): boolean {
-        return this.editMode;
-    }
-
     //setter
-    set editable(bl: boolean) {
-        this.editMode = bl;
+    set title(title: string){
+        this._title = title;
     }
 
-    setTitle(title: string): void {
-        this.title = title;
+    constructor(title: string) {
+        this._title = title;
+        this.completed = false;
+        this.editing = false;
     }
-
-    setCompleted(completed: boolean): void {
-        this.completed = completed;
-    }
-
-
-
 }

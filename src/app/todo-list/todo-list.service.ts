@@ -4,52 +4,44 @@ import { Todo } from './todo.model';
     providedIn: 'root'
 })
 export class TodoListService {
-
     private list: Todo[] = [];
-
     constructor() {
         const listJSON = localStorage.getItem('list');
 
-        if (listJSON !== null) {
-            const listObj = JSON.parse(listJSON);
-            this.list = listObj.map((todo: { title: string, completed: boolean }) => {
-                return new Todo(todo.title, todo.completed);
-            })
+        if (listJSON == null) {
+            return
         }
+        const listObj = JSON.parse(listJSON);
+        this.list = listObj.map((todo: { _title: string, completed: boolean }) => {
+            const pushList = new Todo(todo._title);
+            pushList.completed = todo.completed;
+            return pushList;
+        })
+
     }
-    ///////////// Local Storage ////////////////////
-    save(): void {
-        const stringfied = JSON.stringify(this.list);
-        localStorage.setItem("list", stringfied);
-        console.log('working', stringfied);
+    update(): void {
+        const listJSON = JSON.stringify(this.list);
+        localStorage.setItem('list', listJSON);
     }
 
-    getWithCompleted(completed: boolean): Todo[] {
-        return this.list.filter(todo => todo.done === completed);
-    }
-
-
-    removeCompleted(): void {
+    removeCompleted() {
         this.list = this.getWithCompleted(false);
+        this.update();
     }
-
-    toggleCompletion(todo: Todo): void {
-        todo.toggleCompletion();
-        this.save();
+    getWithCompleted(completed: boolean): Todo[] {
+        return this.list.filter(todo => todo.completed === completed);
     }
-
-    remove(todo: Todo): void {
+    removeTodo(todo: Todo): void {
         this.list.splice(this.list.indexOf(todo), 1);
-        this.save();
+        this.update();
     }
 
-    add(title: string, completed: boolean) {
-        this.list.push(new Todo(title, completed));
-        this.save();
+    addTodo(todo: string): void {
+        this.list.push(new Todo(todo));
+        this.update();
     }
 
     getList(): Todo[] {
         return this.list;
     }
-
 }
