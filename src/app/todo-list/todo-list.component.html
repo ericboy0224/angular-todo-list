@@ -56,27 +56,30 @@
         </span>
         <ul class="filters">
             <li>
-                <a href="javascript:;" [class.selected]="checkStatus(todoStatusType.All)"
+                <a href="javascript:;" [class.selected]="checkStatus(todoStatusType.All)&&!searchMode"
                     (click)="setStatus(todoStatusType.All)">
                     All
                 </a>
             </li>
 
             <li>
-                <a href="javascript:;" [class.selected]="checkStatus(todoStatusType.Active)"
+                <a href="javascript:;" [class.selected]="checkStatus(todoStatusType.Active)&&!searchMode"
                     (click)="setStatus(todoStatusType.Active)">
                     Active
                 </a>
             </li>
 
             <li>
-                <a href="javascript:;" [class.selected]="checkStatus(todoStatusType.Completed)"
+                <a href="javascript:;" [class.selected]="checkStatus(todoStatusType.Completed)&&!searchMode"
                     (click)="setStatus(todoStatusType.Completed)">
                     Completed
                 </a>
             </li>
+            <li>
+                <a href="javascript:;" [class.selected]="searchMode" [class.search]="searchMode" (click)="changeMode()">Search</a>
+            </li>
         </ul>
-        <button class="record" (click)="changeMode()">Search</button>
+
         <button class="clear-completed" *ngIf="getCompletedList().length" (click)="removeCompleted()">Clear
             Completed</button>
     </footer>

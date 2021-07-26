@@ -276,7 +276,9 @@ h1.search{
 .filters li a.selected {
     border-color: rgba(175, 47, 47, 0.2);
 }
-
+.filters li a.selected.search {
+    border-color: rgba(0, 0, 255, 0.2);
+}
 .clear-completed,
 html .clear-completed:active {
     right: 5px;
@@ -290,15 +292,7 @@ html .clear-completed:active {
 .clear-completed:hover {
     text-decoration: underline;
 }
-.record,
-html .record:active {
-    float: right;
-    position: relative;
-    line-height: 20px;
-    margin-right: 22%;
-    text-decoration: none;
-    cursor: pointer;
-}
+
 
 .info {
     margin: 65px auto 0;
