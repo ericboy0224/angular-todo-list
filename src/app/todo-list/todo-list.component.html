@@ -1,26 +1,53 @@
 <section class="todoapp">
 
-    <header class="header">
-        <h1>todos</h1>
-        <input class="new-todo" placeholder="What needs to be done?" [(ngModel)]="todo" (keyup.enter)="addTodo()" autofocus>
-    </header>
-    <section class="main">
-        <input *ngIf="getAllList().length" type="checkbox" class="toggle-all" id="toggle-all" #toggleall
+    <section *ngIf="!searchMode">
+        <header class="header">
+            <h1>todos</h1>
+            <input class="new-todo" placeholder="What needs to be done?" [(ngModel)]="todo" (keyup.enter)="addTodo()" autofocus>
+            <input *ngIf="getAllList().length" type="checkbox" class="toggle-all" id="toggle-all" #toggleall
             [checked]="allCompleted()" (click)="setAllTo(toggleall.checked)">
         <label for="toggle-all"></label>
-        <ul class="todo-list">
-            <li *ngFor="let todo of getList()" [class.completed]="todo.completed" [class.editing]="todo.editing">
-                <div class="view">
-                    <input class="toggle" type="checkbox" [checked]="todo.completed" (click)="toggleCompletion(todo)">
-                    <label (dblclick)="editing(todo)">{{todo.title}}</label>
-                    <button class="destroy" (click)="removeTodo(todo)"></button>
-                </div>
-                <input class="edit" [value]="todo.title" #edittodo *ngIf="todo.editing"
-                    (keyup.enter)="updateTodo(todo, edittodo.value)" (blur)="updateTodo(todo, edittodo.value)"
-                    (keyup.escape)="closeEdit(todo)">
-            </li>
-        </ul>
-
+        </header>
+        <section class="main">
+            <ul class="todo-list">
+                <li *ngFor="let todo of getList()" [class.completed]="todo.completed" [class.editing]="todo.editing">
+                    <div class="view">
+                        <input class="toggle" type="checkbox" [checked]="todo.completed" (click)="toggleCompletion(todo)">
+                        <label class="list-item-label" (dblclick)="editing(todo)">
+                            <span class="list-item-title">{{todo.title}}</span>
+                            <span class="time-stamp">{{todo.date}}</span>
+                        </label>
+                        <button class="destroy" (click)="removeTodo(todo)"></button>
+                    </div>
+                    <input class="edit" [value]="todo.title" #edittodo *ngIf="todo.editing"
+                        (keyup.enter)="updateTodo(todo, edittodo.value)" (blur)="updateTodo(todo, edittodo.value)"
+                        (keyup.escape)="closeEdit(todo)">
+                </li>
+            </ul>
+        </section>
+    </section>
+    <section *ngIf="searchMode">
+        <header class="header">
+            <h1 class="search">Search</h1>
+            <input class="new-todo" placeholder="What needs to be searched?" [(ngModel)]="searchItem" autofocus>
+        </header>
+        <section class="main">
+            <ul class="todo-list">
+                <li *ngFor="let todo of searchList()" [class.completed]="todo.completed" [class.editing]="todo.editing">
+                    <div class="view">
+                        <input class="toggle" type="checkbox" [checked]="todo.completed" (click)="toggleCompletion(todo)">
+                        <label class="list-item-label" (dblclick)="editing(todo)">
+                            <span class="list-item-title">{{todo.title}}</span>
+                            <span class="time-stamp"[class.search]="searchMode">{{todo.date}}</span>
+                        </label>
+                        <button class="destroy" (click)="removeTodo(todo)"></button>
+                    </div>
+                    <input class="edit" [value]="todo.title" #edittodo *ngIf="todo.editing"
+                        (keyup.enter)="updateTodo(todo, edittodo.value)" (blur)="updateTodo(todo, edittodo.value)"
+                        (keyup.escape)="closeEdit(todo)">
+                </li>
+            </ul>
+        </section>
     </section>
     <footer class="footer" *ngIf="getAllList().length>0">
         <span class="todo-count">
@@ -28,7 +55,6 @@
             {{getRemainingList().length > 1 ? 'items':'item'}} left
         </span>
         <ul class="filters">
-
             <li>
                 <a href="javascript:;" [class.selected]="checkStatus(todoStatusType.All)"
                     (click)="setStatus(todoStatusType.All)">
@@ -50,6 +76,7 @@
                 </a>
             </li>
         </ul>
+        <button class="record" (click)="changeMode()">Search</button>
         <button class="clear-completed" *ngIf="getCompletedList().length" (click)="removeCompleted()">Clear
             Completed</button>
     </footer>

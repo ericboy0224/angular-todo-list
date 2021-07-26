@@ -24,6 +24,11 @@ export class TodoListService {
         localStorage.setItem('list', listJSON);
     }
 
+    searchList(str: string): Todo[]{
+        const searchResult = this.list.filter(todo => todo.title.includes(str));
+        return searchResult;
+    }
+
     removeCompleted() {
         this.list = this.getWithCompleted(false);
         this.update();

@@ -1,4 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
+h1.search{
+    color: rgba(0, 0, 255, .2) !important;
+}
 .todoapp {
     background: #fff;
     margin: 130px 0 40px 0;
@@ -67,7 +70,11 @@
     position: relative;
     z-index: 2;
     border-top: 1px solid #e6e6e6;
+    max-height: 50vh;
+    overflow: scroll;
 }
+
+
 
 .toggle-all {
         text-align: center;
@@ -81,7 +88,7 @@
     height: 34px;
     font-size: 0;
     position: absolute;
-    top: -52px;
+    top: 15px;
     left: -13px;
     -webkit-transform: rotate(90deg);
     transform: rotate(90deg);
@@ -120,7 +127,7 @@
 }
 
 .todo-list li.editing .edit {
-    display: block;
+    display: flex;
     width: 506px;
     padding: 12px 16px;
     margin: 0 0 0 43px;
@@ -272,8 +279,9 @@
 
 .clear-completed,
 html .clear-completed:active {
-    float: right;
-    position: relative;
+    right: 5px;
+    position: absolute;
+    margin-right: 5px;
     line-height: 20px;
     text-decoration: none;
     cursor: pointer;
@@ -281,6 +289,15 @@ html .clear-completed:active {
 
 .clear-completed:hover {
     text-decoration: underline;
+}
+.record,
+html .record:active {
+    float: right;
+    position: relative;
+    line-height: 20px;
+    margin-right: 22%;
+    text-decoration: none;
+    cursor: pointer;
 }
 
 .info {
@@ -303,6 +320,30 @@ html .clear-completed:active {
 
 .info a:hover {
     text-decoration: underline;
+}
+
+
+span.time-stamp{
+    background-color:rgba(175, 47, 47, 0.45);
+    box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.2);
+    padding:5px 5px 3px ;
+    top: 0;
+    right: 10%;
+    position: absolute;
+    font-size: .85rem;
+    text-transform: uppercase;
+    color: #fff;
+}
+span.time-stamp.search{
+    background-color:rgba(0, 0, 255, 0.45);
+    box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.2);
+    padding:5px 5px 3px ;
+    top: 0;
+    right: 10%;
+    position: absolute;
+    font-size: .85rem;
+    text-transform: uppercase;
+    color: #fff;
 }
 
 /*

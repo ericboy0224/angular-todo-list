@@ -11,6 +11,8 @@ export class TodoListComponent implements OnInit {
     todo: string = '';
     todoStatusType = TodoStatusType;
     private status = TodoStatusType.All;
+    searchMode: boolean = false;
+    searchItem: string = '';
     constructor(private todoListService: TodoListService) { }
 
     @ViewChild('edittodo',{static: false})
@@ -24,13 +26,20 @@ export class TodoListComponent implements OnInit {
     update(){
         this.todoListService.update();
     }
+    searchList(): Todo[]{
+        return this.todoListService.searchList(this.searchItem);
+    }
 
+    changeMode(){
+        this.searchMode = !this.searchMode;
+    }
     checkStatus(status: number): boolean{
         return this.status === status;
     }
 
     setStatus(status: number): void{
         this.status = status;
+        this.searchMode = false;
     }
 
     removeCompleted(): void {
