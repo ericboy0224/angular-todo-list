@@ -70,8 +70,6 @@ h1.search{
     position: relative;
     z-index: 2;
     border-top: 1px solid #e6e6e6;
-    max-height: 50vh;
-    overflow: scroll;
 }
 
 
@@ -321,6 +319,7 @@ span.time-stamp{
     background-color:rgba(175, 47, 47, 0.45);
     box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.2);
     padding:5px 5px 3px ;
+    width: 65px;
     top: 0;
     right: 10%;
     position: absolute;
@@ -330,14 +329,14 @@ span.time-stamp{
 }
 span.time-stamp.search{
     background-color:rgba(0, 0, 255, 0.45);
-    box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.2);
+    /* box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.2);
     padding:5px 5px 3px ;
     top: 0;
     right: 10%;
     position: absolute;
     font-size: .85rem;
     text-transform: uppercase;
-    color: #fff;
+    color: #fff; */
 }
 
 /*

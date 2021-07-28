@@ -1,21 +1,24 @@
 <section class="todoapp">
 
-    <section *ngIf="!searchMode">
+    <section>
         <header class="header">
-            <h1>todos</h1>
-            <input class="new-todo" placeholder="What needs to be done?" [(ngModel)]="todo" (keyup.enter)="addTodo()" autofocus>
-            <input *ngIf="getAllList().length" type="checkbox" class="toggle-all" id="toggle-all" #toggleall
-            [checked]="allCompleted()" (click)="setAllTo(toggleall.checked)">
-        <label for="toggle-all"></label>
+            <h1 [class.search]="searchMode">{{searchMode?'Search':'Todos'}}</h1>
+            <input class="new-todo" [placeholder]="searchMode?'What needs to be searched?':'What needs to be done'"
+                [(ngModel)]="todo" (keyup.enter)="searchMode?'':addTodo()" autofocus>
+            <input *ngIf="getAllList().length&&!searchMode" type="checkbox" class="toggle-all" id="toggle-all"
+                #toggleall [checked]="allCompleted()" (click)="setAllTo(toggleall.checked)">
+            <label for="toggle-all"></label>
         </header>
         <section class="main">
             <ul class="todo-list">
-                <li *ngFor="let todo of getList()" [class.completed]="todo.completed" [class.editing]="todo.editing">
+                <li *ngFor="let todo of displayedMode()" [class.completed]="todo.completed"
+                    [class.editing]="todo.editing">
                     <div class="view">
-                        <input class="toggle" type="checkbox" [checked]="todo.completed" (click)="toggleCompletion(todo)">
+                        <input class="toggle" type="checkbox" [checked]="todo.completed"
+                            (click)="toggleCompletion(todo)">
                         <label class="list-item-label" (dblclick)="editing(todo)">
                             <span class="list-item-title">{{todo.title}}</span>
-                            <span class="time-stamp">{{todo.date}}</span>
+                            <span class="time-stamp" [class.search]="searchMode">{{todo.date}}</span>
                         </label>
                         <button class="destroy" (click)="removeTodo(todo)"></button>
                     </div>
@@ -26,7 +29,7 @@
             </ul>
         </section>
     </section>
-    <section *ngIf="searchMode">
+    <!-- <section *ngIf="searchMode">
         <header class="header">
             <h1 class="search">Search</h1>
             <input class="new-todo" placeholder="What needs to be searched?" [(ngModel)]="searchItem" autofocus>
@@ -48,8 +51,8 @@
                 </li>
             </ul>
         </section>
-    </section>
-    <footer class="footer" *ngIf="getAllList().length>0">
+    </section> -->
+    <footer class="footer" *ngIf="getAllList().length>0 || searchMode">
         <span class="todo-count">
             <strong>{{getRemainingList().length}}</strong>
             {{getRemainingList().length > 1 ? 'items':'item'}} left
@@ -76,12 +79,17 @@
                 </a>
             </li>
             <li>
-                <a href="javascript:;" [class.selected]="searchMode" [class.search]="searchMode" (click)="changeMode()">Search</a>
+                <a href="javascript:;" [class.selected]="searchMode" [class.search]="searchMode"
+                    (click)="changeMode()">Search</a>
             </li>
         </ul>
 
         <button class="clear-completed" *ngIf="getCompletedList().length" (click)="removeCompleted()">Clear
             Completed</button>
     </footer>
-
 </section>
+<footer class="info">
+    <p>Double-click to edit a todo</p>
+    <p>Search bar can search both title and date</p>
+    <p>Created by <a href="https://github.com/ericboy0224">Eric Lin</a> .</p>
+</footer>

@@ -12,10 +12,8 @@ export class TodoListService {
             return
         }
         const listObj = JSON.parse(listJSON);
-        this.list = listObj.map((todo: { _title: string, completed: boolean }) => {
-            const pushList = new Todo(todo._title);
-            pushList.completed = todo.completed;
-            return pushList;
+        this.list = listObj.map((todo: { _title: string, completed: boolean, date: string }) => {
+            return new Todo(todo._title, todo.completed, todo.date);
         })
 
     }
@@ -25,7 +23,7 @@ export class TodoListService {
     }
 
     searchList(str: string): Todo[]{
-        const searchResult = this.list.filter(todo => todo.title.includes(str));
+        const searchResult = this.list.filter(todo => todo.title.includes(str)||todo.date.includes(str));
         return searchResult;
     }
 
@@ -42,7 +40,7 @@ export class TodoListService {
     }
 
     addTodo(todo: string): void {
-        this.list.push(new Todo(todo));
+        this.list.push(new Todo(todo, false, new Date().toLocaleDateString()));
         this.update();
     }
 

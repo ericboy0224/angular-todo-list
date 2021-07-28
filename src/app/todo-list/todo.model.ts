@@ -2,7 +2,7 @@ export class Todo {
     // 記錄代辦事項與完成、編輯模式
     completed: boolean;
     editing: boolean;
-    date: any;
+    date: string;
     private _title: string;
 
     //getter
@@ -14,11 +14,11 @@ export class Todo {
         this._title = title;
     }
 
-    constructor(title: string) {
+    constructor(title: string, completed: boolean,date: string) {
         this._title = title;
-        this.completed = false;
+        this.completed = completed;
         this.editing = false;
-        this.date = new Date().toLocaleDateString();
+        this.date = date;
 
     }
 }

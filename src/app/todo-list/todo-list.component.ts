@@ -12,7 +12,7 @@ export class TodoListComponent implements OnInit {
     todoStatusType = TodoStatusType;
     private status = TodoStatusType.All;
     searchMode: boolean = false;
-    searchItem: string = '';
+    // searchItem: string = '';
     constructor(private todoListService: TodoListService) { }
 
     @ViewChild('edittodo',{static: false})
@@ -26,8 +26,18 @@ export class TodoListComponent implements OnInit {
     update(){
         this.todoListService.update();
     }
-    searchList(): Todo[]{
-        return this.todoListService.searchList(this.searchItem);
+    displayedMode(): Todo[]{
+        let list: Todo[] =[];
+        switch (this.searchMode) {
+            case true:
+                list = this.todoListService.searchList(this.todo);
+                break;
+
+            default:
+                list = this.getList();
+                break;
+        }
+        return list;
     }
 
     changeMode(){
