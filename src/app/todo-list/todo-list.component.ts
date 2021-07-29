@@ -13,6 +13,7 @@ export class TodoListComponent implements OnInit {
     private status = TodoStatusType.All;
     searchMode: boolean = false;
 
+
     // searchItem: string = '';
     constructor(private todoListService: TodoListService) { }
 
@@ -76,13 +77,16 @@ export class TodoListComponent implements OnInit {
         todo.comment = todo.comment.trim().length > 0 ? todo.comment :'Write some comments ...';
     }
 
-    updateTodo(todo: Todo, newTitle: string, newComment: string) {
+    updateTodo(todo: Todo, editText:{newTitle:string,newComment: string}) {
         if (!todo.editing) {
             return;
         }
-
-        const title = newTitle.trim();
-        const comment = newComment.trim();
+        const title = editText.newTitle.trim();
+        const comment = editText.newComment.trim();
+        // if(comment.length > 0){
+        //     todo.comment = comment.length > 0 ? comment :'Write some comments ...';
+        //     todo.editing = false;
+        // }
 
         if (title.length > 0) {
             todo.title = title;
@@ -95,7 +99,6 @@ export class TodoListComponent implements OnInit {
     }
 
     editing(todo: Todo): void {
-
         todo.editing = true;
         if (todo.comment === 'Write some comments ...') {
             todo.comment = '';
