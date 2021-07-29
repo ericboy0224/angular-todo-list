@@ -12,44 +12,40 @@ export class TodoListComponent implements OnInit {
     todoStatusType = TodoStatusType;
     private status = TodoStatusType.All;
     searchMode: boolean = false;
+
     // searchItem: string = '';
     constructor(private todoListService: TodoListService) { }
 
-    @ViewChild('edittodo',{static: false})
-    set edittodo(element: ElementRef<HTMLInputElement>){
-        if(element){
+    @ViewChild('edittitle', { static: false })
+    set edittitle(element: ElementRef<HTMLInputElement>) {
+        if (element) {
             element.nativeElement.focus()
         }
     }
+
     ngOnInit(): void {
     }
-    update(){
+    update() {
         this.todoListService.update();
     }
-    displayedMode(): Todo[]{
-        let list: Todo[] =[];
-        switch (this.searchMode) {
-            case true:
-                list = this.todoListService.searchList(this.todo);
-                break;
-
-            default:
-                list = this.getList();
-                break;
-        }
-        return list;
+    // displayedMode(): Todo[] {
+    //     return this.searchMode ? this.todoListService.searchList(this.todo) : this.getList();
+    // }
+    getSearchList() {
+        return this.todoListService.searchList(this.todo);
     }
 
-    changeMode(){
+    changeMode() {
         this.searchMode = !this.searchMode;
     }
-    checkStatus(status: number): boolean{
+
+    checkStatus(status: number): boolean {
         return this.status === status;
     }
 
-    setStatus(status: number): void{
+    setStatus(status: number, searchMode: boolean): void {
         this.status = status;
-        this.searchMode = false;
+        this.searchMode = searchMode
     }
 
     removeCompleted(): void {
@@ -64,6 +60,7 @@ export class TodoListComponent implements OnInit {
         this.getList().forEach((todo) => {
             todo.completed = completed;
         })
+        this.update();
     }
 
     getCompletedList(): Todo[] {
@@ -76,16 +73,21 @@ export class TodoListComponent implements OnInit {
 
     closeEdit(todo: Todo) {
         todo.editing = false;
+        todo.comment = todo.comment.trim().length > 0 ? todo.comment :'Write some comments ...';
     }
 
-    updateTodo(todo: Todo, newTitle: string) {
+    updateTodo(todo: Todo, newTitle: string, newComment: string) {
         if (!todo.editing) {
             return;
         }
+
         const title = newTitle.trim();
+        const comment = newComment.trim();
+
         if (title.length > 0) {
             todo.title = title;
             todo.editing = false;
+            todo.comment = comment.length > 0 ? comment :'Write some comments ...';
         } else {
             this.removeTodo(todo);
         }
@@ -93,7 +95,11 @@ export class TodoListComponent implements OnInit {
     }
 
     editing(todo: Todo): void {
+
         todo.editing = true;
+        if (todo.comment === 'Write some comments ...') {
+            todo.comment = '';
+        }
     }
 
     toggleCompletion(todo: Todo) {
@@ -126,6 +132,11 @@ export class TodoListComponent implements OnInit {
                 list = this.getCompletedList();
                 break;
 
+            case TodoStatusType.Search:
+                list = this.getSearchList();
+                break;
+
+
             default:
                 list = this.todoListService.getList();
                 break;
@@ -134,7 +145,7 @@ export class TodoListComponent implements OnInit {
         return list;
     }
 
-    getAllList(): Todo[]{
+    getAllList(): Todo[] {
         return this.todoListService.getList();
     }
 }

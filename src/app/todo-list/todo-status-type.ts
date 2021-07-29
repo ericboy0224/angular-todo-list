@@ -4,5 +4,7 @@ export enum TodoStatusType {
 
     Active,
 
-    Completed
+    Completed,
+
+    Search,
 }

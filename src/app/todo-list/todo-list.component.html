@@ -11,47 +11,46 @@
         </header>
         <section class="main">
             <ul class="todo-list">
-                <li *ngFor="let todo of displayedMode()" [class.completed]="todo.completed"
-                    [class.editing]="todo.editing">
+                <li *ngFor="let todo of getList()" [class.completed]="todo.completed" [class.editing]="todo.editing">
                     <div class="view">
+                        <p class="time-stamp" [class.search]="searchMode">{{todo.date}}</p>
                         <input class="toggle" type="checkbox" [checked]="todo.completed"
                             (click)="toggleCompletion(todo)">
                         <label class="list-item-label" (dblclick)="editing(todo)">
-                            <span class="list-item-title">{{todo.title}}</span>
-                            <span class="time-stamp" [class.search]="searchMode">{{todo.date}}</span>
+                            <div class="list-item-text">
+                                <span class="list-item-title">{{todo.title}}</span>
+                                <span class="list-item-comment">{{todo.comment}}</span>
+                            </div>
+
                         </label>
-                        <button class="destroy" (click)="removeTodo(todo)"></button>
+                        <div class="view-toolbox">
+                            <button class="editBtn" (click)="editing(todo)"></button>
+                            <button class="destroy" (click)="removeTodo(todo)"></button>
+                        </div>
                     </div>
-                    <input class="edit" [value]="todo.title" #edittodo *ngIf="todo.editing"
-                        (keyup.enter)="updateTodo(todo, edittodo.value)" (blur)="updateTodo(todo, edittodo.value)"
-                        (keyup.escape)="closeEdit(todo)">
+                    <div class="form-control" *ngIf="todo.editing"
+                        (keyup.enter)="updateTodo(todo, edittitle.value, editcomment.value)"
+                        (keyup.escape)="closeEdit(todo)"
+                        #editform>
+                    <div class="form-item-group" >
+
+                            <div class="form-item">
+                                <label class="form-label" for="edittitle">Title</label>
+                                <input class="edit" #edittitle [value]="todo.title" name="edittitle">
+                            </div>
+                            <div class="form-item">
+                                <label class="form-label" for="editcomment">Comment</label>
+                                <input class="edit" #editcomment [value]="todo.comment" name="edicomment" placeholder="Write some comment..." (blur)="updateTodo(todo, edittitle.value, editcomment.value)">
+                            </div>
+                    </div>
+                    <button class="form-btn" (click)="updateTodo(todo, edittitle.value, editcomment.value)">Save</button>
+
+                    </div>
+                    <div [class.overlay]="todo.editing" (click)="closeEdit(todo)"></div>
                 </li>
             </ul>
         </section>
     </section>
-    <!-- <section *ngIf="searchMode">
-        <header class="header">
-            <h1 class="search">Search</h1>
-            <input class="new-todo" placeholder="What needs to be searched?" [(ngModel)]="searchItem" autofocus>
-        </header>
-        <section class="main">
-            <ul class="todo-list">
-                <li *ngFor="let todo of searchList()" [class.completed]="todo.completed" [class.editing]="todo.editing">
-                    <div class="view">
-                        <input class="toggle" type="checkbox" [checked]="todo.completed" (click)="toggleCompletion(todo)">
-                        <label class="list-item-label" (dblclick)="editing(todo)">
-                            <span class="list-item-title">{{todo.title}}</span>
-                            <span class="time-stamp"[class.search]="searchMode">{{todo.date}}</span>
-                        </label>
-                        <button class="destroy" (click)="removeTodo(todo)"></button>
-                    </div>
-                    <input class="edit" [value]="todo.title" #edittodo *ngIf="todo.editing"
-                        (keyup.enter)="updateTodo(todo, edittodo.value)" (blur)="updateTodo(todo, edittodo.value)"
-                        (keyup.escape)="closeEdit(todo)">
-                </li>
-            </ul>
-        </section>
-    </section> -->
     <footer class="footer" *ngIf="getAllList().length>0 || searchMode">
         <span class="todo-count">
             <strong>{{getRemainingList().length}}</strong>
@@ -59,28 +58,28 @@
         </span>
         <ul class="filters">
             <li>
-                <a href="javascript:;" [class.selected]="checkStatus(todoStatusType.All)&&!searchMode"
-                    (click)="setStatus(todoStatusType.All)">
+                <a href="javascript:;" [class.selected]="checkStatus(todoStatusType.All)"
+                    (click)="setStatus(todoStatusType.All, false)">
                     All
                 </a>
             </li>
 
             <li>
-                <a href="javascript:;" [class.selected]="checkStatus(todoStatusType.Active)&&!searchMode"
-                    (click)="setStatus(todoStatusType.Active)">
+                <a href="javascript:;" [class.selected]="checkStatus(todoStatusType.Active)"
+                    (click)="setStatus(todoStatusType.Active, false)">
                     Active
                 </a>
             </li>
 
             <li>
-                <a href="javascript:;" [class.selected]="checkStatus(todoStatusType.Completed)&&!searchMode"
-                    (click)="setStatus(todoStatusType.Completed)">
+                <a href="javascript:;" [class.selected]="checkStatus(todoStatusType.Completed)"
+                    (click)="setStatus(todoStatusType.Completed, false)">
                     Completed
                 </a>
             </li>
             <li>
-                <a href="javascript:;" [class.selected]="searchMode" [class.search]="searchMode"
-                    (click)="changeMode()">Search</a>
+                <a href="javascript:;" #searchtodo [class.selected]="checkStatus(todoStatusType.Search)"
+                    [class.search]="searchMode" (click)="setStatus(todoStatusType.Search, true)">Search</a>
             </li>
         </ul>
 
@@ -90,6 +89,7 @@
 </section>
 <footer class="info">
     <p>Double-click to edit a todo</p>
-    <p>Search bar can search both title and date</p>
+    <p>Search bar can search both <a href="#">title</a> and <a href="#">date</a></p>
     <p>Created by <a href="https://github.com/ericboy0224">Eric Lin</a> .</p>
 </footer>
+
