@@ -7,9 +7,11 @@
             <label for="comment">Comment:</label>
             <textarea #commentvalue name="comment" [value]="todo.comment"
                 (keyup.enter)="editTodo(titlevalue,commentvalue)" id="comment"></textarea>
+            <p class="info">New Line: Press Shift and Enter. </p>
             <div class="btn-group">
                 <button class="btn btn-primary" (click)="editTodo(titlevalue,commentvalue)">Save</button>
             </div>
+
         </div>
     </div>
 </div>
