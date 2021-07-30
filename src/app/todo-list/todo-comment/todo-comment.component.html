@@ -2,14 +2,24 @@
     <div class="todo-comment">
         <a href="#" (click)="closeEdit(todo)">x</a>
         <div class="comment-box">
-            <input type="text" #titlevalue [value]="todo.title" (keyup.enter)="change()" id="title">
+            <div class="top-box">
+                <div class="title-box">
+                    <label for="title">Title:</label>
+                    <input type="text" #titlevalue name="title" [value]="todo.title" (keyup.enter)="change()"
+                        id="title">
+                </div>
+                <div class="date-box">
+                    <label for="date">Date:</label>
+                    <input type="date" name="date" id="date" #datevalue>
+                </div>
+            </div>
             <hr>
             <label for="comment">Comment:</label>
             <textarea #commentvalue name="comment" [value]="todo.comment"
-                (keyup.enter)="editTodo(titlevalue,commentvalue)" id="comment"></textarea>
+                (keyup.enter)="editTodo(titlevalue,commentvalue,datevalue)" id="comment"></textarea>
             <p class="info">New Line: Press Shift and Enter. </p>
             <div class="btn-group">
-                <button class="btn btn-primary" (click)="editTodo(titlevalue,commentvalue)">Save</button>
+                <button class="btn btn-primary" (click)="editTodo(titlevalue,commentvalue,datevalue)">Save</button>
             </div>
 
         </div>

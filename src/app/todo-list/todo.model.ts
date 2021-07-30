@@ -8,16 +8,6 @@ export class Todo {
     date: string;
     title: string;
 
-
-    // //getter
-    // get title() {
-    //     return this._title;
-    // }
-    // //setter
-    // set title(title: string) {
-    //     this._title = title;
-    // }
-
     constructor(title: string, date: string) {
         this.title = title;
         this.comment = 'Write some comments ...'

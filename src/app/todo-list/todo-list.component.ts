@@ -77,21 +77,19 @@ export class TodoListComponent implements OnInit {
         todo.comment = todo.comment.trim().length > 0 ? todo.comment : 'Write some comments ...';
     }
 
-    updateTodo(todo: Todo, editText: { newTitle: string, newComment: string }) {
+    updateTodo(todo: Todo, editText: { newTitle: string, newComment: string, newDate: string }) {
         if (!todo.editing) {
             return;
         }
         const title = editText.newTitle.trim();
         const comment = editText.newComment.trim();
-        // if(comment.length > 0){
-        //     todo.comment = comment.length > 0 ? comment :'Write some comments ...';
-        //     todo.editing = false;
-        // }
+        const date = editText.newDate.split('-').join('/');
 
         if (title.length > 0) {
             todo.title = title;
             todo.editing = false;
             todo.comment = comment.length > 0 ? comment : 'Write some comments ...';
+            todo.date = date ? date : todo.date;
         } else {
             this.removeTodo(todo);
         }

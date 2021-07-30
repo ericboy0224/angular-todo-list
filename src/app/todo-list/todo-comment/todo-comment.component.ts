@@ -1,5 +1,6 @@
-import { Component, Input, OnInit, Output, EventEmitter, Renderer2, ViewChild, ElementRef } from '@angular/core';
-import { Todo } from '../todo.model';
+import { Todo } from './../todo.model';
+import { Component, Input, OnInit, Output, EventEmitter, Renderer2, AfterViewInit } from '@angular/core';
+
 @Component({
     selector: 'app-todo-comment',
     templateUrl: './todo-comment.component.html',
@@ -9,33 +10,27 @@ export class TodoCommentComponent implements OnInit {
     @Input() todo: Todo = { title: '', comment: '', completed: false, editing: false, date: '' };
     newTitle: string = "";
     titleEditing = false;
-
-    @Output() edited = new EventEmitter<{ newTitle: string, newComment: string }>();
-
-    constructor(public render2: Renderer2) {
-
-    }
-
+    @Output() edited = new EventEmitter<{ newTitle: string, newComment: string, newDate: string }>();
+    constructor(public render2: Renderer2) { }
 
     ngOnInit(): void {
     }
-
 
     change(): void {
         this.render2.selectRootElement('#comment').focus();
     }
 
-    editTodo(titlevalue: HTMLInputElement, commentvalue: HTMLTextAreaElement): void {
-
+    editTodo(titlevalue: HTMLInputElement, commentvalue: HTMLTextAreaElement, datevalue: HTMLInputElement): void {
         this.edited.emit({
             newTitle: titlevalue.value,
-            newComment: commentvalue.value
+            newComment: commentvalue.value,
+            newDate: datevalue.value
         })
     }
 
     closeEdit(todo: Todo): void {
         todo.editing = false;
-        todo.comment = todo.comment.trim().length > 0 ? todo.comment : 'Write some comments...';
+        todo.comment = todo.comment.trim().length > 0 ? todo.comment : 'Write some comments ...';
     }
 
 }
