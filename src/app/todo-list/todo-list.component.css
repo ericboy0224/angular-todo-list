@@ -341,79 +341,16 @@ p.time-stamp {
     background-color: rgba(175, 47, 47, 0.45);
     box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.2);
     padding: 0 3px;
-    /* top: 11px;
-    left: 65%;
-    transform: translate(-50%, -50%);
-    position: absolute; */
     font-size: 0.85rem;
     text-transform: uppercase;
     color: #fff;
-    /* display: block; */
 }
 span.list-item-comment {
     font-size: 0.85rem;
     color: #777;
-    /* margin-left: 5px; */
 }
 span.time-stamp.search {
     background-color: rgba(0, 0, 255, 0.45);
-    /* box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.2);
-    padding:5px 5px 3px ;
-    top: 0;
-    right: 10%;
-    position: absolute;
-    font-size: .85rem;
-    text-transform: uppercase;
-    color: #fff; */
-}
-
-.view-toolbox {
-}
-/************************ FORM **********************************/
-.form-control {
-    display: flex;
-    z-index: 100;
-    position: relative;
-    background-color: #fff;
-    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.25);
-}
-.form-item-group {
-    display: flex;
-    flex-direction: column;
-    flex: 0 0 85%;
-    height: 100%;
-}
-
-.form-item {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-}
-
-.todo-list li label.form-label {
-    flex: 0 0 17%;
-    margin: 0;
-    padding: 10px 5px 10px 5px;
-    font-size: 18px;
-    line-height: normal;
-}
-input.edit {
-    border:none;
-    font-size: 18px;
-    box-shadow: none;
-    border-bottom: solid 1px #777;
-    width: 70%;
-    color: #777;
-}
-
-.form-btn {
-    flex: 1;
-    background-color: #af5b5e;
-    color: #ededed;
-}
-
-.form-btn:hover {
-    background-color: #cc9a9a;
 }
 
 .overlay{
