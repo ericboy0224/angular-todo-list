@@ -2,11 +2,10 @@
     <div class="todo-comment">
         <a href="#" (click)="closeEdit(todo)">x</a>
         <div class="comment-box">
-            <label class="title" [class.editing]="titleEditing" (dblclick)="editTitle()">{{todo.title}}</label>
-            <input type="text" #titlevalue [value]="todo.title" [class.editing]="titleEditing" (keyup.enter)="titleEdited(titlevalue.value)" (blur)="titleEdited(titlevalue.value)">
+            <input type="text" #titlevalue [value]="todo.title" (keyup.enter)="change()" id="title">
             <hr>
             <label for="comment">Comment:</label>
-            <textarea #commentvalue name="comment" [value]="todo.comment"(keyup.enter)="editTodo(titlevalue,commentvalue)"></textarea>
+            <textarea #commentvalue name="comment" [value]="todo.comment"(keyup.enter)="editTodo(titlevalue,commentvalue)"id="comment"></textarea>
             <div class="btn-group">
                 <button class="btn btn-primary" (click)="editTodo(titlevalue,commentvalue)"  >Save</button>
             </div>

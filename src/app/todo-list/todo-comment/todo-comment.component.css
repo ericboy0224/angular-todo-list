@@ -37,10 +37,10 @@ label.title{
 label.title.editing{
     display: none;
 }
-input{
+/* input{
     display: none;
-}
-input.editing{
+} */
+input{
     display: block;
     margin: 0;
     width: 100%;
