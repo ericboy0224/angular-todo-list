@@ -334,6 +334,7 @@ label.list-item-label {
     flex: 0 0 80%;
     display: flex;
     flex-direction: column;
+    width: 168px;
 }
 span.list-item-title {
 }
@@ -346,6 +347,9 @@ p.time-stamp {
     color: #fff;
 }
 span.list-item-comment {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
     font-size: 0.85rem;
     color: #777;
 }
@@ -353,7 +357,7 @@ span.time-stamp.search {
     background-color: rgba(0, 0, 255, 0.45);
 }
 
-.overlay{
+.overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -361,7 +365,7 @@ span.time-stamp.search {
     height: 100vh;
     transform: scale(100);
     z-index: 1;
-    background-color: rgba(0,0,0 ,.25);
+    background-color: rgba(0, 0, 0, 0.25);
     filter: blur(3px);
 }
 /*
