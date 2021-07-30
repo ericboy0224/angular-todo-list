@@ -74,10 +74,10 @@ export class TodoListComponent implements OnInit {
 
     closeEdit(todo: Todo) {
         todo.editing = false;
-        todo.comment = todo.comment.trim().length > 0 ? todo.comment :'Write some comments ...';
+        todo.comment = todo.comment.trim().length > 0 ? todo.comment : 'Write some comments ...';
     }
 
-    updateTodo(todo: Todo, editText:{newTitle:string,newComment: string}) {
+    updateTodo(todo: Todo, editText: { newTitle: string, newComment: string }) {
         if (!todo.editing) {
             return;
         }
@@ -91,7 +91,7 @@ export class TodoListComponent implements OnInit {
         if (title.length > 0) {
             todo.title = title;
             todo.editing = false;
-            todo.comment = comment.length > 0 ? comment :'Write some comments ...';
+            todo.comment = comment.length > 0 ? comment : 'Write some comments ...';
         } else {
             this.removeTodo(todo);
         }

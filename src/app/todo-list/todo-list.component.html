@@ -1,5 +1,4 @@
 <section class="todoapp">
-
     <section>
         <header class="header">
             <h1 [class.search]="searchMode">{{searchMode?'Search':'Todos'}}</h1>
@@ -12,7 +11,7 @@
         <section class="main">
             <ul class="todo-list">
                 <li *ngFor="let todo of getList()" [class.completed]="todo.completed" [class.editing]="todo.editing">
-                    <app-todo-comment [todo]="todo" (edited)="updateTodo(todo, $event)" ></app-todo-comment>
+                    <app-todo-comment [todo]="todo" (edited)="updateTodo(todo, $event)"></app-todo-comment>
                     <div class="view">
                         <p class="time-stamp" [class.search]="searchMode">{{todo.date}}</p>
                         <input class="toggle" type="checkbox" [checked]="todo.completed"
@@ -29,32 +28,12 @@
                             <button class="destroy" (click)="removeTodo(todo)"></button>
                         </div>
                     </div>
-                    <!-- <div class="form-control" *ngIf="todo.editing"
-                        (keyup.enter)="updateTodo(todo, edittitle.value, editcomment.value)"
-                        (keyup.escape)="closeEdit(todo)"
-                        #editform>
-                    <div class="form-item-group" >
-                            <div class="form-item">
-                                <label class="form-label" for="edittitle">Title</label>
-                                <input class="edit" #edittitle [value]="todo.title" name="edittitle">
-                            </div>
-                            <div class="form-item">
-                                <label class="form-label" for="editcomment">Comment</label>
-                                <input class="edit" #editcomment [value]="todo.comment" name="edicomment" placeholder="Write some comment..." (blur)="updateTodo(todo, edittitle.value, editcomment.value)">
-                            </div>
-                    </div>
-                    <button class="form-btn" (click)="updateTodo(todo, edittitle.value, editcomment.value)">Save</button>
-
-                    </div> -->
                     <div [class.overlay]="todo.editing" (click)="closeEdit(todo)"></div>
-
                 </li>
             </ul>
-
-
-
         </section>
     </section>
+
     <footer class="footer" *ngIf="getAllList().length>0 || searchMode">
         <span class="todo-count">
             <strong>{{getRemainingList().length}}</strong>
@@ -67,14 +46,12 @@
                     All
                 </a>
             </li>
-
             <li>
                 <a href="javascript:;" [class.selected]="checkStatus(todoStatusType.Active)"
                     (click)="setStatus(todoStatusType.Active, false)">
                     Active
                 </a>
             </li>
-
             <li>
                 <a href="javascript:;" [class.selected]="checkStatus(todoStatusType.Completed)"
                     (click)="setStatus(todoStatusType.Completed, false)">
@@ -86,15 +63,13 @@
                     [class.search]="searchMode" (click)="setStatus(todoStatusType.Search, true)">Search</a>
             </li>
         </ul>
-
         <button class="clear-completed" *ngIf="getCompletedList().length" (click)="removeCompleted()">Clear
             Completed</button>
     </footer>
 </section>
+
 <footer class="info">
     <p>Double-click to edit a todo</p>
     <p>Search bar can search both <a href="#">title</a> and <a href="#">date</a></p>
     <p>Created by <a href="https://github.com/ericboy0224">Eric Lin</a> .</p>
 </footer>
-
-

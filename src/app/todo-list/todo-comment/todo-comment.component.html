@@ -5,9 +5,10 @@
             <input type="text" #titlevalue [value]="todo.title" (keyup.enter)="change()" id="title">
             <hr>
             <label for="comment">Comment:</label>
-            <textarea #commentvalue name="comment" [value]="todo.comment"(keyup.enter)="editTodo(titlevalue,commentvalue)"id="comment"></textarea>
+            <textarea #commentvalue name="comment" [value]="todo.comment"
+                (keyup.enter)="editTodo(titlevalue,commentvalue)" id="comment"></textarea>
             <div class="btn-group">
-                <button class="btn btn-primary" (click)="editTodo(titlevalue,commentvalue)"  >Save</button>
+                <button class="btn btn-primary" (click)="editTodo(titlevalue,commentvalue)">Save</button>
             </div>
         </div>
     </div>

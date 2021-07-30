@@ -13,6 +13,7 @@ export class TodoCommentComponent implements OnInit {
     @Output() edited = new EventEmitter<{ newTitle: string, newComment: string }>();
 
     constructor(public render2: Renderer2) {
+
     }
 
 
@@ -23,6 +24,7 @@ export class TodoCommentComponent implements OnInit {
     change(): void {
         this.render2.selectRootElement('#comment').focus();
     }
+
     editTodo(titlevalue: HTMLInputElement, commentvalue: HTMLTextAreaElement): void {
 
         this.edited.emit({
