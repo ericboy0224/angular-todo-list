@@ -1,4 +1,4 @@
-<div class="comment-position" [class.editing]="todo.editing">
+<div class="comment-position" *ngIf="todo.editing">
     <div class="todo-comment">
         <a href="#" (click)="closeEdit(todo)">x</a>
         <div class="comment-box">
