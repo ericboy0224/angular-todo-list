@@ -20,26 +20,24 @@ export class TodoListService {
             return { title: todo.title, comment: todo.comment, completed: todo.completed, date: todo.date }
         })
 
-        //Update Edited Value
-        this.edited.subscribe((todo: Todo) => {
-            const title = todo.title.trim()
-            const comment = todo.comment.trim();
-            const date = todo.date.split('-').join('/');
-            if (title.length > 0) {
-                todo.title = title;
-                todo.editing = false;
-                todo.comment = comment || 'Write some comments ...';
-                todo.date = date;
-            } else {
-                this.removeTodo(todo);
-            }
-            this.update();
-
-            console.log(title, comment, date);
-        })
+    }
+    //Update Edited Value
+    updateTodo(todo: Todo): void {
+        const title = todo.title.trim()
+        const comment = todo.comment.trim();
+        const date = todo.date.split('-').join('/');
+        if (title.length > 0) {
+            todo.title = title;
+            todo.editing = false;
+            todo.comment = comment || 'Write some comments ...';
+            todo.date = date;
+        } else {
+            this.removeTodo(todo);
+        }
+        this.update();
 
     }
-
+    //Save Data
     update(): void {
         const listJSON = JSON.stringify(this.list);
         localStorage.setItem('list', listJSON);

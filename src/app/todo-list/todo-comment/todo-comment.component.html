@@ -16,10 +16,10 @@
             <hr>
             <label for="comment">Comment:</label>
             <textarea #commentvalue name="comment" [value]="todo.comment"
-                (keyup.enter)="editTodo(titlevalue,commentvalue,datevalue)" id="comment"></textarea>
+                (keyup.enter)="updateTodo(titlevalue,commentvalue,datevalue)" id="comment"></textarea>
             <p class="info">New Line: Press Shift and Enter. </p>
             <div class="btn-group">
-                <button class="btn btn-primary" (click)="editTodo(titlevalue,commentvalue,datevalue)">Save</button>
+                <button class="btn btn-primary" (click)="updateTodo(titlevalue,commentvalue,datevalue)">Save</button>
             </div>
 
         </div>

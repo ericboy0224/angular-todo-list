@@ -22,12 +22,11 @@ export class TodoCommentComponent implements OnInit {
         this.render2.selectRootElement('#comment').focus();
     }
 
-    editTodo(titlevalue: HTMLInputElement, commentvalue: HTMLTextAreaElement, datevalue: HTMLInputElement): void {
+    updateTodo(titlevalue: HTMLInputElement, commentvalue: HTMLTextAreaElement, datevalue: HTMLInputElement): void {
         this.todo.title = titlevalue.value;
         this.todo.comment = commentvalue.value;
         this.todo.date = datevalue.value || this.todo.date;
-
-        this.todoListService.edited.emit(this.todo);
+        this.todoListService.updateTodo(this.todo);
     }
 
     closeEdit(todo: Todo): void {

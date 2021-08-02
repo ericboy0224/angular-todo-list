@@ -9,7 +9,6 @@
     z-index: 200;
 }
 .todo-comment {
-    /* display: none; */
     margin: 0;
     padding: 0;
     list-style: none;
@@ -37,9 +36,7 @@ label.title {
 label.title.editing {
     display: none;
 }
-/* input{
-    display: none;
-} */
+
 .top-box{
     display: flex;
     flex-direction: column;

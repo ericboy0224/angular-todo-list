@@ -1,4 +1,3 @@
-import { Placeholder } from "@angular/compiler/src/i18n/i18n_ast";
 
 export class Todo {
     // 記錄代辦事項與完成、編輯模式
@@ -14,7 +13,5 @@ export class Todo {
         this.completed = false;
         this.editing = false;
         this.date = date;
-
-
     }
 }
