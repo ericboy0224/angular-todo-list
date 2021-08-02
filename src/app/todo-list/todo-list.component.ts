@@ -1,5 +1,6 @@
+import { TodoCommentService } from './todo-comment/todo-comment.service';
 import { TodoListService } from './todo-list.service';
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Todo } from './todo.model';
 import { TodoStatusType } from './todo-status-type';
 @Component({
@@ -15,7 +16,24 @@ export class TodoListComponent implements OnInit {
 
 
     // searchItem: string = '';
-    constructor(private todoListService: TodoListService) { }
+    constructor(private todoListService: TodoListService, private todoCommentService: TodoCommentService) {
+        this.todoCommentService.edited.subscribe((editedTodo: { todo: Todo, newTitle: string, newComment: string, newDate: string }) => {
+            const title = editedTodo.newTitle.trim();
+            const comment = editedTodo.newComment.trim();
+            const date = editedTodo.newDate.split('-').join('/');
+            if (title.length > 0) {
+                editedTodo.todo.title = title;
+                editedTodo.todo.editing = false;
+                editedTodo.todo.comment = comment.length > 0 ? comment : 'Write some comments ...';
+                editedTodo.todo.date = date ? date : editedTodo.todo.date;
+            } else {
+                this.removeTodo(editedTodo.todo);
+            }
+            this.update();
+
+            console.log(title, comment, date);
+        })
+    }
 
     @ViewChild('edittitle', { static: false })
     set edittitle(element: ElementRef<HTMLInputElement>) {
@@ -75,25 +93,6 @@ export class TodoListComponent implements OnInit {
     closeEdit(todo: Todo) {
         todo.editing = false;
         todo.comment = todo.comment.trim().length > 0 ? todo.comment : 'Write some comments ...';
-    }
-
-    updateTodo(todo: Todo, editText: { newTitle: string, newComment: string, newDate: string }) {
-        if (!todo.editing) {
-            return;
-        }
-        const title = editText.newTitle.trim();
-        const comment = editText.newComment.trim();
-        const date = editText.newDate.split('-').join('/');
-
-        if (title.length > 0) {
-            todo.title = title;
-            todo.editing = false;
-            todo.comment = comment.length > 0 ? comment : 'Write some comments ...';
-            todo.date = date ? date : todo.date;
-        } else {
-            this.removeTodo(todo);
-        }
-        this.update();
     }
 
     editing(todo: Todo): void {

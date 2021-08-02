@@ -42,7 +42,9 @@ label.title.editing {
 } */
 .top-box{
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: stretch;
 }
 input {
     display: block;
@@ -58,6 +60,7 @@ input {
     box-sizing: border-box;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    width: 100%;
 }
 textarea {
     height: 100px;

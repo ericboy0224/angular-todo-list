@@ -1,5 +1,6 @@
+import { TodoCommentService } from './todo-comment.service';
 import { Todo } from './../todo.model';
-import { Component, Input, OnInit, Output, EventEmitter, Renderer2, AfterViewInit } from '@angular/core';
+import { Component, Input, OnInit, Renderer2, EventEmitter, Output } from '@angular/core';
 
 @Component({
     selector: 'app-todo-comment',
@@ -10,8 +11,8 @@ export class TodoCommentComponent implements OnInit {
     @Input() todo: Todo = { title: '', comment: '', completed: false, editing: false, date: '' };
     newTitle: string = "";
     titleEditing = false;
-    @Output() edited = new EventEmitter<{ newTitle: string, newComment: string, newDate: string }>();
-    constructor(public render2: Renderer2) { }
+    constructor(public render2: Renderer2, public todoCommentService: TodoCommentService) {
+    }
 
     ngOnInit(): void {
     }
@@ -21,11 +22,7 @@ export class TodoCommentComponent implements OnInit {
     }
 
     editTodo(titlevalue: HTMLInputElement, commentvalue: HTMLTextAreaElement, datevalue: HTMLInputElement): void {
-        this.edited.emit({
-            newTitle: titlevalue.value,
-            newComment: commentvalue.value,
-            newDate: datevalue.value
-        })
+        this.todoCommentService.edited.emit({ todo: this.todo, newTitle: titlevalue.value, newComment: commentvalue.value, newDate: datevalue.value })
     }
 
     closeEdit(todo: Todo): void {

@@ -10,8 +10,8 @@
         </header>
         <section class="main">
             <ul class="todo-list">
-                <li *ngFor="let todo of getList()" [class.completed]="todo.completed" [class.editing]="todo.editing">
-                    <app-todo-comment [todo]="todo" (edited)="updateTodo(todo, $event)"></app-todo-comment>
+                <li *ngFor="let todo of getList()" [class.completed]="todo.completed">
+                    <app-todo-comment [todo]="todo"></app-todo-comment>
                     <div class="view">
                         <p class="time-stamp" [class.search]="searchMode">{{todo.date}}</p>
                         <input class="toggle" type="checkbox" [checked]="todo.completed"
@@ -21,7 +21,6 @@
                                 <span class="list-item-title">{{todo.title}}</span>
                                 <span class="list-item-comment">{{todo.comment}}</span>
                             </div>
-
                         </label>
                         <div class="view-toolbox">
                             <button class="editBtn" (click)="editing(todo)"></button>
