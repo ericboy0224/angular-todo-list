@@ -1,4 +1,5 @@
-import { TodoCommentService } from './todo-comment.service';
+import { TodoListService } from './../todo-list.service';
+
 import { Todo } from './../todo.model';
 import { Component, Input, OnInit, Renderer2, EventEmitter, Output } from '@angular/core';
 
@@ -11,7 +12,7 @@ export class TodoCommentComponent implements OnInit {
     @Input() todo: Todo = { title: '', comment: '', completed: false, editing: false, date: '' };
     newTitle: string = "";
     titleEditing = false;
-    constructor(public render2: Renderer2, public todoCommentService: TodoCommentService) {
+    constructor(public render2: Renderer2, public todoListService :TodoListService) {
     }
 
     ngOnInit(): void {
@@ -22,7 +23,7 @@ export class TodoCommentComponent implements OnInit {
     }
 
     editTodo(titlevalue: HTMLInputElement, commentvalue: HTMLTextAreaElement, datevalue: HTMLInputElement): void {
-        this.todoCommentService.edited.emit({ todo: this.todo, newTitle: titlevalue.value, newComment: commentvalue.value, newDate: datevalue.value })
+        this.todoListService.edited.emit({ todo: this.todo, newTitle: titlevalue.value, newComment: commentvalue.value, newDate: datevalue.value })
     }
 
     closeEdit(todo: Todo): void {

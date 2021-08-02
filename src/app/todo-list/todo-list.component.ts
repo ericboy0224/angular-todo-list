@@ -1,4 +1,3 @@
-import { TodoCommentService } from './todo-comment/todo-comment.service';
 import { TodoListService } from './todo-list.service';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Todo } from './todo.model';
@@ -16,8 +15,8 @@ export class TodoListComponent implements OnInit {
 
 
     // searchItem: string = '';
-    constructor(private todoListService: TodoListService, private todoCommentService: TodoCommentService) {
-        this.todoCommentService.edited.subscribe((editedTodo: { todo: Todo, newTitle: string, newComment: string, newDate: string }) => {
+    constructor(private todoListService: TodoListService) {
+        this.todoListService.edited.subscribe((editedTodo: { todo: Todo, newTitle: string, newComment: string, newDate: string }) => {
             const title = editedTodo.newTitle.trim();
             const comment = editedTodo.newComment.trim();
             const date = editedTodo.newDate.split('-').join('/');

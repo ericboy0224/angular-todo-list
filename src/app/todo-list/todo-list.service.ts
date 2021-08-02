@@ -1,10 +1,13 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { Todo } from './todo.model';
 @Injectable({
     providedIn: 'root'
 })
 export class TodoListService {
     private list: Todo[] = [];
+
+    edited = new EventEmitter<{ todo: Todo, newTitle: string, newComment: string, newDate: string }>();
+
     constructor() {
         const listJSON = localStorage.getItem('list');
 
@@ -12,10 +15,11 @@ export class TodoListService {
             return
         }
         this.list = JSON.parse(listJSON).map((todo: { title: string, comment: string, completed: boolean, date: string }) => {
-            return {title: todo.title,comment: todo.comment, completed: todo.completed, date:todo.date}
+            return { title: todo.title, comment: todo.comment, completed: todo.completed, date: todo.date }
         })
 
     }
+
     update(): void {
         const listJSON = JSON.stringify(this.list);
         localStorage.setItem('list', listJSON);
@@ -39,7 +43,7 @@ export class TodoListService {
     }
 
     addTodo(todo: string): void {
-        this.list.push(new Todo(todo ,new Date().toLocaleDateString()));
+        this.list.push(new Todo(todo, new Date().toLocaleDateString()));
         this.update();
     }
 
