@@ -6,9 +6,11 @@ import { Todo } from './todo.model';
 export class TodoListService {
     private list: Todo[] = [];
 
-    edited = new EventEmitter<{ todo: Todo, newTitle: string, newComment: string, newDate: string }>();
+    // Emit Edited Value
+    edited = new EventEmitter<Todo>();
 
     constructor() {
+        // Normalization
         const listJSON = localStorage.getItem('list');
 
         if (listJSON == null) {
@@ -16,6 +18,24 @@ export class TodoListService {
         }
         this.list = JSON.parse(listJSON).map((todo: { title: string, comment: string, completed: boolean, date: string }) => {
             return { title: todo.title, comment: todo.comment, completed: todo.completed, date: todo.date }
+        })
+
+        //Update Edited Value
+        this.edited.subscribe((todo: Todo) => {
+            const title = todo.title.trim()
+            const comment = todo.comment.trim();
+            const date = todo.date.split('-').join('/');
+            if (title.length > 0) {
+                todo.title = title;
+                todo.editing = false;
+                todo.comment = comment || 'Write some comments ...';
+                todo.date = date;
+            } else {
+                this.removeTodo(todo);
+            }
+            this.update();
+
+            console.log(title, comment, date);
         })
 
     }

@@ -13,25 +13,8 @@ export class TodoListComponent implements OnInit {
     private status = TodoStatusType.All;
     searchMode: boolean = false;
 
-
-    // searchItem: string = '';
     constructor(private todoListService: TodoListService) {
-        this.todoListService.edited.subscribe((editedTodo: { todo: Todo, newTitle: string, newComment: string, newDate: string }) => {
-            const title = editedTodo.newTitle.trim();
-            const comment = editedTodo.newComment.trim();
-            const date = editedTodo.newDate.split('-').join('/');
-            if (title.length > 0) {
-                editedTodo.todo.title = title;
-                editedTodo.todo.editing = false;
-                editedTodo.todo.comment = comment.length > 0 ? comment : 'Write some comments ...';
-                editedTodo.todo.date = date ? date : editedTodo.todo.date;
-            } else {
-                this.removeTodo(editedTodo.todo);
-            }
-            this.update();
 
-            console.log(title, comment, date);
-        })
     }
 
     @ViewChild('edittitle', { static: false })
@@ -46,9 +29,7 @@ export class TodoListComponent implements OnInit {
     update() {
         this.todoListService.update();
     }
-    // displayedMode(): Todo[] {
-    //     return this.searchMode ? this.todoListService.searchList(this.todo) : this.getList();
-    // }
+
     getSearchList() {
         return this.todoListService.searchList(this.todo);
     }
