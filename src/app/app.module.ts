@@ -14,7 +14,7 @@ import { TodoCommentComponent } from './todo-list/todo-comment/todo-comment.comp
     ],
     imports: [
         BrowserModule,
-        FormsModule
+        FormsModule,
     ],
     providers: [],
     bootstrap: [AppComponent]

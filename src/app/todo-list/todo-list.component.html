@@ -1,11 +1,12 @@
 <section class="todoapp">
     <section>
         <header class="header">
-            <h1 [class.search]="searchMode">{{searchMode?'Search':'Todos'}}</h1>
-            <input class="new-todo" [placeholder]="searchMode?'What needs to be searched?':'What needs to be done'"
-                [(ngModel)]="todo" (keyup.enter)="searchMode?'':addTodo()" autofocus>
-            <input *ngIf="getAllList().length&&!searchMode" type="checkbox" class="toggle-all" id="toggle-all"
-                #toggleall [checked]="allCompleted()" (click)="setAllTo(toggleall.checked)">
+            <h1 [class.search]="searchMode">{{ searchMode ? 'Search' : 'Todos' }}</h1>
+            <input class="new-todo" [placeholder]="
+          searchMode ? 'What needs to be searched?' : 'What needs to be done'
+        " [(ngModel)]="todo" (keyup.enter)="searchMode ? '' : addTodo()" autofocus />
+            <input *ngIf="getAllList().length && !searchMode" type="checkbox" class="toggle-all" id="toggle-all"
+                #toggleall [checked]="allCompleted()" (click)="setAllTo(toggleall.checked)" />
             <label for="toggle-all"></label>
         </header>
         <section class="main">
@@ -13,13 +14,15 @@
                 <li *ngFor="let todo of getList()" [class.completed]="todo.completed">
                     <app-todo-comment [todo]="todo"></app-todo-comment>
                     <div class="view">
-                        <p class="time-stamp" [class.search]="searchMode">{{todo.date}}</p>
+                        <p class="time-stamp" [class.search]="searchMode">
+                            {{ todo.date }}
+                        </p>
                         <input class="toggle" type="checkbox" [checked]="todo.completed"
-                            (click)="toggleCompletion(todo)">
+                            (click)="toggleCompletion(todo)" />
                         <label class="list-item-label" (dblclick)="editing(todo)">
                             <div class="list-item-text">
-                                <span class="list-item-title">{{todo.title}}</span>
-                                <span class="list-item-comment">{{todo.comment}}</span>
+                                <span class="list-item-title">{{ todo.title }}</span>
+                                <span class="list-item-comment">{{ todo.comment }}</span>
                             </div>
                         </label>
                         <div class="view-toolbox">
@@ -33,10 +36,10 @@
         </section>
     </section>
 
-    <footer class="footer" *ngIf="getAllList().length>0 || searchMode">
+    <footer class="footer" *ngIf="getAllList().length > 0 || searchMode">
         <span class="todo-count">
-            <strong>{{getRemainingList().length}}</strong>
-            {{getRemainingList().length > 1 ? 'items':'item'}} left
+            <strong>{{ getRemainingList().length }}</strong>
+            {{ getRemainingList().length > 1 ? 'items' : 'item' }} left
         </span>
         <ul class="filters">
             <li>
@@ -62,13 +65,16 @@
                     [class.search]="searchMode" (click)="setStatus(todoStatusType.Search, true)">Search</a>
             </li>
         </ul>
-        <button class="clear-completed" *ngIf="getCompletedList().length" (click)="removeCompleted()">Clear
-            Completed</button>
+        <button class="clear-completed" *ngIf="getCompletedList().length" (click)="removeCompleted()">
+            Clear Completed
+        </button>
     </footer>
 </section>
 
 <footer class="info">
     <p>Double-click to edit a todo</p>
-    <p>Search bar can search both <a href="#">title</a> and <a href="#">date</a></p>
+    <p>
+        Search bar can search both <a href="#">title</a> and <a href="#">date</a>
+    </p>
     <p>Created by <a href="https://github.com/ericboy0224">Eric Lin</a> .</p>
 </footer>
